@@ -1,2 +1,6 @@
 openai
 python-dotenv
+gTTS
+SpeechRecognition
+pyaudio
+pygame 
