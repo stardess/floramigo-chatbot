@@ -33,5 +33,12 @@
         "plant_problem": "The user's Monstera plant is turning yellow and showing signs of distress.",
         "date": "2025-07-28",
         "time": "17:32:25"
+    },
+    {
+        "user_name": "dess",
+        "plant_name": "monstera",
+        "plant_problem": "The user's plant is drying out and the leaves are turning yellow.",
+        "date": "2025-07-28",
+        "time": "21:14:24"
     }
 ]
