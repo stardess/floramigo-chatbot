@@ -1,0 +1,44 @@
+
+    "Snake Plant": {
+        "Plant Type": "Succulent",
+        "Care Profile": {
+            "Soil Moisture": "Allow soil to dry thoroughly between waterings",
+            "Temperature (\u00b0F)": "65\u201385 (avoid below 50)",
+            "Humidity": "Low to average (30\u201350%)",
+            "Light": "Bright indirect; tolerates low light"
+        },
+        "Common Issues": [
+            "Overwatering \u2192 yellow leaves, root rot",
+            "Low light stress \u2192 stunted growth, faded variegation",
+            "Pests \u2192 mealybugs, spider mites, scale"
+        ]
+    },
+    "Spider Plant": {
+        "Plant Type": "Hardy Type",
+        "Care Profile": {
+            "Soil Moisture": "Lightly moist, not soggy",
+            "Temperature (\u00b0F)": "65\u201375 (avoid below 50)",
+            "Humidity": "Moderate to high (50\u201360%)",
+            "Light": "Bright indirect; avoid harsh sun"
+        },
+        "Common Issues": [
+            "Low humidity \u2192 brown leaf tips",
+            "Water quality sensitivity \u2192 leaf burn",
+            "Pests \u2192 aphids, spider mites, whiteflies"
+        ]
+    "Peace Lily": {
+        "Plant Type": "Tropical",
+        "Care Profile": {
+            "Soil Moisture": "Consistently moist, not waterlogged",
+            "Temperature (\u00b0F)": "65\u201380",
+            "Humidity": "High (40\u201360%+)",
+            "Light": "Bright indirect; tolerates low light"
+        },
+        "Common Issues": [
+            "Underwatering \u2192 drooping leaves",
+            "Overwatering \u2192 yellow leaves, root rot",
+            "Poor water quality \u2192 brown tips",
+            "Low light / nutrient deficiency \u2192 no blooms"
+        ]
+    }
+}
