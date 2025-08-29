@@ -1,0 +1,9 @@
+# Client deps (sounddevice, requests, etc.)
+
+openai
+python-dotenv
+gTTS
+SpeechRecognition
+pyaudio
+pygame 
+

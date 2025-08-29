@@ -42,3 +42,24 @@ floramigo-code/                               # Root project directory
 ├─ requirements-core.txt                 # Core deps (openai, numpy, etc.)
 ├─ requirements-client.txt               # Client deps (sounddevice, requests, etc.)
 └─ dev-guide.md                          # How to run, env vars, workflows
+
+floramigo/core/
+
+orchestrator.py   # Build prompt, pick PCD tips, call LLM, parse command
+phd.py            # PHD v1: latest telemetry → statuses + safe actions
+llm_client.py     # OpenAI/Phi client wrapper
+rag_pipeline.py   # v0 snippets (later: embeddings/vector search)
+embeddings.py     # (later) embedding utilities
+config.py         # Core service settings
+
+api/routers/
+
+health.py   # GET /healthz
+ingest.py   # POST /ingest/telemetry
+ask.py      # POST /ask
+phd.py      # GET /diagnose (optional: PHD-only output for debugging)
+
+floramigo/pcd/
+
+thresholds.yaml   # Per-plant ranges
+pcd_snippets.json # Short care tips keyed by plant + tag

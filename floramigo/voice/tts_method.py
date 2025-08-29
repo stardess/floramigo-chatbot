@@ -1,3 +1,5 @@
+# Text-to-Speech adapter module
+
 from gtts import gTTS
 import os
 import uuid

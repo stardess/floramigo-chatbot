@@ -1,0 +1,1 @@
+# Your plant care knowledge base used by RAG/orchestrator
