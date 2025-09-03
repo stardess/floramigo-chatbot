@@ -1,5 +1,8 @@
+# Speech-to-Text adapter module 
+
+
 import speech_recognition as sr
-from tts_method import speak
+from floramigo.voice.tts_method import speak
 
 def get_voice_input():
     recognizer = sr.Recognizer()
