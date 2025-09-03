@@ -1,3 +1,5 @@
+
+.venv/
 # Environment and credentials
 .env
 
