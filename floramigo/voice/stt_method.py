@@ -2,7 +2,7 @@
 
 
 import speech_recognition as sr
-from floramigo.voice.tts_method import speak
+from .tts_method import speak
 
 def get_voice_input():
     recognizer = sr.Recognizer()

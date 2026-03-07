@@ -20,6 +20,7 @@ __pycache__/
 # Local generated files
 model-output.json
 temp_audio_*.mp3
+threshold_monitoring.py
 
 # Reference material kept outside source control
 floramigo-plant-care-main/
