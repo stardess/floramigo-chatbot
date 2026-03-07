@@ -6,4 +6,5 @@ gTTS
 SpeechRecognition
 pyaudio
 pygame 
+requests
 

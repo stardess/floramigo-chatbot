@@ -1,1 +1,3 @@
-# Core deps (openai, numpy, etc.)
+openai>=1.0.0
+python-dotenv>=1.0.0
+pyserial>=3.5

@@ -16,3 +16,11 @@ __pycache__/
 /data/*.json
 /logs/* 
 !.keep
+
+# Local generated files
+model-output.json
+temp_audio_*.mp3
+
+# Reference material kept outside source control
+floramigo-plant-care-main/
+floramigo-plant-care-main.zip

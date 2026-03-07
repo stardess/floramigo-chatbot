@@ -1,0 +1,1 @@
+"""Floramigo core package."""

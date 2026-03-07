@@ -51,15 +51,40 @@ llm_client.py     # OpenAI/Phi client wrapper
 rag_pipeline.py   # v0 snippets (later: embeddings/vector search)
 embeddings.py     # (later) embedding utilities
 config.py         # Core service settings
+## Developer guide
 
-api/routers/
+This file is a contributor-facing map of the current Floramigo codebase.
 
-health.py   # GET /healthz
-ingest.py   # POST /ingest/telemetry
-ask.py      # POST /ask
-phd.py      # GET /diagnose (optional: PHD-only output for debugging)
+### Main folders
 
-floramigo/pcd/
+- `api/` holds the FastAPI application, routers, and request/response models
+- `client/` contains local chat scripts and side experiments
+- `floramigo/` is the main package for telemetry logic, orchestration, prompt helpers, and voice utilities
+- `data/` contains generated sensor snapshots and alert output during local runs
+- `docs/` contains human-readable documentation for architecture and operation
 
-thresholds.yaml   # Per-plant ranges
-pcd_snippets.json # Short care tips keyed by plant + tag
+### Key implementation files
+
+- `floramigo/core/config.py` defines runtime settings and shared paths
+- `floramigo/core/phd.py` owns reading ingestion, threshold checks, storage, and plant summaries
+- `floramigo/core/orchestrator.py` combines user prompts with plant context and care hints
+- `floramigo/core/llm_client.py` isolates the model provider integration
+- `floramigo/core/rag_pipeline.py` is currently a compact prompt helper, not a full retrieval stack
+- `api/main.py` constructs the API app and registers routes
+- `api/models/command.py` defines the current Pydantic schemas
+- `client/floramigo-chat.py` is the preferred CLI entrypoint for end-to-end testing
+
+### Expected workflows
+
+- use the API routes for chat and telemetry instead of wiring more logic directly into the client
+- add new sensor analysis rules in `floramigo/core/phd.py`
+- extend prompt behavior in `floramigo/core/orchestrator.py` and `floramigo/pcd/pcd_snippets.py`
+- keep generated files and extracted reference material out of source control
+
+### Environment variables
+
+- `OPENAI_API_KEY` enables model-backed answers
+- `FLORAMIGO_OPENAI_MODEL` changes the default model name
+- `FLORAMIGO_API_HOST` and `FLORAMIGO_API_PORT` affect API binding
+- `FLORAMIGO_API_URL` tells the CLI client where to send requests
+- `FLORAMIGO_SERIAL_PORT` and `FLORAMIGO_BAUD_RATE` configure serial monitoring

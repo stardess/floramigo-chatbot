@@ -1,37 +1,35 @@
-# Main CLI app that handles STT/TTS and talks to /ask
-
-import os
 import json
+import os
 from datetime import datetime
-from openai import OpenAI
-from dotenv import load_dotenv, find_dotenv
 
-# Load API key from .env
+import requests
+from dotenv import find_dotenv, load_dotenv
+
+
 _ = load_dotenv(find_dotenv())
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# Output file name
+API_BASE_URL = os.getenv("FLORAMIGO_API_URL", "http://127.0.0.1:8000")
 OUTPUT_FILE = "model-output.json"
 
-# Initial system message for the assistant
-messages = [
-    {
-        "role": "system",
-        "content": (
-            "You are Floramigo, a friendly and plant-savvy AI assistant. "
-            "Help users with plant care advice in a warm, encouraging tone. "
-            "Keep answers clear and actionable."
-        )
-    }
-]
 
-def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=0.7):
-    response = client.chat.completions.create(
-        model=model,
-        messages=messages,
-        temperature=temperature
+def ask_api(message, plant_name=None, include_sensor_context=True):
+    response = requests.post(
+        f"{API_BASE_URL}/ask",
+        json={
+            "message": message,
+            "plant_name": plant_name,
+            "include_sensor_context": include_sensor_context,
+        },
+        timeout=60,
     )
-    return response.choices[0].message.content
+    response.raise_for_status()
+    return response.json()
+
+
+def get_status():
+    response = requests.get(f"{API_BASE_URL}/diagnose", timeout=20)
+    response.raise_for_status()
+    return response.json()
 
 def save_conversation_summary(user_name, plant_name, plant_problem, timestamp):
     new_entry = {
@@ -62,6 +60,13 @@ def save_conversation_summary(user_name, plant_name, plant_problem, timestamp):
     print(f"\nSummary appended to {OUTPUT_FILE}")
 
 
+def summarize_problem(summary_collector):
+    if not summary_collector:
+        return "General plant-care conversation."
+    excerpt = " ".join(summary_collector[-3:]).strip()
+    return excerpt[:180] + ("..." if len(excerpt) > 180 else "")
+
+
 def start_chat():
     print("Welcome to Floramigo. Let's get started with a few questions.")
 
@@ -80,19 +85,24 @@ def start_chat():
             print("Floramigo: You're welcome. Take care.")
             break
 
-        messages.append({"role": "user", "content": user_input})
-        assistant_response = get_completion_from_messages(messages)
-        messages.append({"role": "assistant", "content": assistant_response})
+        if user_input.lower() == "status":
+            try:
+                status = get_status()
+                print(f"\nFloramigo: {status['summary']}")
+            except requests.RequestException as exc:
+                print(f"\nFloramigo: I couldn't fetch plant status from the API: {exc}")
+            continue
 
-        print(f"\nFloramigo: {assistant_response}")
+        try:
+            result = ask_api(user_input, plant_name=plant_name)
+            print(f"\nFloramigo: {result['response']}")
+        except requests.RequestException as exc:
+            print(f"\nFloramigo: I couldn't reach the API at {API_BASE_URL}: {exc}")
+            continue
+
         summary_collector.append(user_input)
 
-    # Summarize plant problem
-    problem_prompt = [
-        {"role": "system", "content": "Summarize this user's plant issue in one short sentence."},
-        {"role": "user", "content": " ".join(summary_collector)}
-    ]
-    plant_problem_summary = get_completion_from_messages(problem_prompt)
+    plant_problem_summary = summarize_problem(summary_collector)
 
     save_conversation_summary(user_name, plant_name, plant_problem_summary, timestamp)
 
