@@ -1,4 +1,4 @@
-# Client deps (sounddevice, requests, etc.)
+# Client deps (voice, requests, etc.)
 
 openai
 python-dotenv
@@ -7,4 +7,6 @@ SpeechRecognition
 pyaudio
 pygame 
 requests
+numpy
+wave
 
